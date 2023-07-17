@@ -57,12 +57,10 @@ func (e *Polyscan) ExecutionStatus(txHash string) (bool, error) {
 		return false, fmt.Errorf("decode json error: %v", err)
 	}
 
-	if s.Result == nil {
+	if s.Message != messageOK || s.Result == nil {
 		return false, fmt.Errorf("pending. result is nil")
 	}
-	if s.Message != messageOK {
-		return false, nil
-	}
+
 	return s.Result.Status == "1", nil
 }
 
